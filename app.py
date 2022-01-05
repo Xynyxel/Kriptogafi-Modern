@@ -1,38 +1,36 @@
-import math
-
-def binary_to_String(a):
-  l=[]
-  m=""
-  for i in a:
-    b=0
-    c=0
-    k=int(math.log10(i))+1
-    for j in range(k):
-      b=((i%10)*(2**j))   
-      i=i//10
-      c=c+b
-    l.append(c)
-  for x in l:
-    m=m+chr(x)
-  return m
-
-def string_to_binary(a_binary_string):
-    l,m=[],[]
-    for i in a_binary_string:
-        l.append(ord(i))
-    for i in l:
-        m.append(int(bin(i)[2:]))
-    return m
+from kivymd.app import MDApp
+from kivy.lang.builder import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
+import helpers
 
 
-print('Enter your plain Text:')
-pt = input()
-pt = string_to_binary(pt)
-print('plain text (binary), ',pt)
-pt = binary_to_String(pt)
-print('plain text (string), ',pt)
+class MenuScreen(Screen):
+    pass
 
-print('Enter your key:')
-k = input()
-k = string_to_binary(k)
-print('plain text, ' + k)
+
+class RC4Screen(Screen):
+  def encodeData(self):
+    cipher_text = self.cipher_text.text
+    key_cipher_text = self.key_cipher_text.text
+    print(cipher_text)
+    print(key_cipher_text)
+
+
+class RSAScreen(Screen):
+    pass
+
+
+class KriptografiModernApp(MDApp):
+
+    def build(self):
+        # Create the screen manager
+        sm = ScreenManager()
+        screen = Builder.load_string(helpers.screen_helper)
+        sm.add_widget(MenuScreen(name='menu'))
+        sm.add_widget(RC4Screen(name='RC4'))
+        sm.add_widget(RSAScreen(name='RSA'))
+        return screen
+
+
+if __name__ == "__main__":
+  KriptografiModernApp().run()
