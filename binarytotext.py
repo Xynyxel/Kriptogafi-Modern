@@ -25,14 +25,14 @@ def string_to_binary(a_binary_string):
     return m
 
 
-print('Enter your plain Text:')
-pt = input()
-pt = string_to_binary(pt)
-print('plain text (binary), ',pt)
-pt = binary_to_String(pt)
-print('plain text (string), ',pt)
+# print('Enter your plain Text:')
+# pt = input()
+# pt = string_to_binary(pt)
+# print('plain text (binary), ',pt)
+# pt = binary_to_String(pt)
+# print('plain text (string), ',pt)
 
-print('Enter your key:')
-k = input()
-k = string_to_binary(k)
-print('plain text, ' + k)
+# print('Enter your key:')
+# k = input()
+# k = string_to_binary(k)
+# print('plain text, ' + k)
