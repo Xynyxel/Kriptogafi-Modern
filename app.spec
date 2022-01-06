@@ -7,11 +7,17 @@ from kivy_deps import sdl2, glew
 
 from kivymd import hooks_path as kivymd_hooks_path
 
-path = os.path.abspath(".")
+path = os.path.abspath("D:\\Kriptogafi-Modern")
+
+datas=[
+    ('D:\Kriptogafi-Modern\Logo.png', 'data'),
+    ('D:\Kriptogafi-Modern\Credit.png', 'data'),
+]
 
 a = Analysis(
     ["app.py"],
     pathex=[path],
+    datas = datas,
     hookspath=[kivymd_hooks_path],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,

@@ -1,7 +1,11 @@
-# How to make virtual environtment : py -3 -m venv venv
-# How to activate virtual environtment : .\venv\Scripts\activate
-# How to change the compiler to virtual environtment python : .\venv\Scripts
-# Install from requirement.txt : pip install -r requirements.txt
-# Make kivymd to exe : pyinstaller app.spec
+# Kriptogafi-Klasik
 
-KIVYMD playlist https://www.youtube.com/watch?v=u3Ue6IlzbOE&list=PLhTjy8cBISEoQQLZ9IBlVlr4WjVoStmy-&index=14
+# Cara Menggunakan aplikasi
+1. Download File dari Github
+2. Lalu buka folder dist
+3. Cari Kriptografi Modern.exe
+
+## RC4
+
+## RSA
+

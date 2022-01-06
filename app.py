@@ -7,7 +7,7 @@ from Crypto.Cipher import PKCS1_OAEP
 from Crypto.Cipher import ARC4 as rc4cipher
 import base64
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton, MDLabel
+from kivymd.uix.button import MDFlatButton
 
 screen_helper = """
 ScreenManager:
@@ -19,8 +19,11 @@ ScreenManager:
     MDLabel:
         text: 'Kriptografi Modern'
         halign: 'center'
-        font_size: 50
-        pos_hint:{'center_x': 0.5, 'center_y': 0.9}
+        font_size : 50
+        pos_hint:{'center_x': 0.5, 'center_y': 0.8}
+    FitImage:
+        source: 'Logo.png'
+        pos_hint:{'center_x': 0.5, 'center_y': 0.4}
     MDRectangleFlatButton:
         text: 'Enkripsi Simetris - RC4'
         pos_hint: {'center_x':0.5,'center_y':0.6}
@@ -36,18 +39,21 @@ ScreenManager:
     MDLabel:
         text: 'Credit'
         halign: 'center'
-        font_size: 20
-        pos_hint:{'center_x': 0.5, 'center_y': 0.3}  
+        font_size : 20
+        pos_hint:{'center_x': 0.5, 'center_y': 0.3}
     MDLabel:
         text: 'Tony Wijaya 1855301037'
         halign: 'center'
-        font_size: 20
-        pos_hint:{'center_x': 0.5, 'center_y': 0.2}  
+        font_size : 15
+        pos_hint:{'center_x': 0.5, 'center_y': 0.25}
     MDLabel:
-        text: 'Nabila Firdha Aisyah 1855301015'
+        text: 'Nabila Firdha 1855301015'
         halign: 'center'
-        font_size: 20
-        pos_hint:{'center_x': 0.5, 'center_y': 0.1}     
+        font_size : 15
+        pos_hint:{'center_x': 0.5, 'center_y': 0.2}
+    FitImage:
+        source: 'Credit.png'
+        pos_hint:{'center_x': 0.5, 'center_y': 0.5}    
 
 <RC4Screen>:
     name: 'RC4'
@@ -263,7 +269,7 @@ class RSAScreen(Screen):
         self.dialog = MDDialog(
                                title='Public key',
                                text=pubkey,
-                               size_hint=(0.9,0.9),
+                               size_hint=(1,0.5),
                                buttons=[MDFlatButton(text='Close', on_release=self.close_dialog)]
                                )
         self.dialog.open()
@@ -293,6 +299,7 @@ class KriptografiModernApp(MDApp):
 
     def build(self):
         # Create the screen manager
+        self.theme_cls.theme_style = "Dark"
         sm = ScreenManager()
         screen = Builder.load_string(screen_helper)
         sm.add_widget(MenuScreen(name='menu'))
