@@ -5,12 +5,24 @@ import helpers
 import rc4
 import rsa
 import binascii
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
+
 
 class MenuScreen(Screen):
     pass
 
 
 class RC4Screen(Screen):
+
+    def close(self):
+        self.plain_text.text = ""
+        self.key_plain_text.text = ""
+        self.hasil_enkripsi.text = ""
+        self.cipher_text.text = ""
+        self.key_cipher_text = ""    
+        self.hasil_dekripsi = ""
+
     def encodeData(self):
         plain_text = self.plain_text.text
         key_plain_text = self.key_plain_text.text
@@ -28,23 +40,36 @@ class RC4Screen(Screen):
 
 class RSAScreen(Screen):
 
-    def Generatepublickey(self):
-        publickey = rsa.publickey
-        print(publickey)
-        self.publickey.text = "test"
+    def close(self):
+        self.plain_text = ""
+        self.cipher_text = ""
+        self.hasil_enkripsi = ""
+        self.hasil_dekripsi = ""
+        self.publickey = ""
+        self.privatekey = ""
 
-    def Generateprivatekey(self):
-        self.privatekey.text =  rsa.privatekey
+    def Generatepublickey_private(self):
+        keyPair = RSA.generate(3072)
+        pubKey = keyPair.publickey()
+        pubKeyPEM = pubKey.exportKey()
+        privKeyPEM = keyPair.exportKey()
+        self.publickey.text = pubKeyPEM.decode('ascii')
+        self.privatekey.text = privKeyPEM.decode('ascii')
 
-    def encodeData(self):
-        plain_text = self.plain_text.text
-        output  = str(rsa.encode(plain_text))
-        self.hasil_enkripsi.text = output
+    # def encodeData(self):
+    #     pubKey = ""
+    #     plain_text = self.plain_text.text
+    #     plain_text = bytes(plain_text, 'utf-8')
+    #     encryptor = PKCS1_OAEP.new(pubKey)
+    #     encrypted = encryptor.encrypt(plain_text)
+    #     self.hasil_enkripsi.text = binascii.hexlify(encrypted).decode('UTF-8')
     
-    def decodeData(self):
-        cipher_text = self.cipher_text.text
-        output  = "Hasil Dekripsi : "+rsa.decode(cipher_text)
-        self.hasil_dekripsi.text = output
+    # def decodeData(self):
+    #     keypair = ""
+    #     cipher_text = self.cipher_text.text
+    #     decryptor = PKCS1_OAEP.new(keyPair)
+    #     decrypted = decryptor.decrypt(cipher_text)
+    #     self.hasil_dekripsi.text = decrypted.decode('UTF-8')
 
 
 class KriptografiModernApp(MDApp):

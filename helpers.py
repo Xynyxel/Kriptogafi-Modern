@@ -27,6 +27,7 @@ ScreenManager:
     hasil_enkripsi : hasil_enkripsi
     hasil_dekripsi : hasil_dekripsi
     
+    
     MDLabel:
         text: 'Encryption RC4'
         halign: 'center'
@@ -94,6 +95,7 @@ ScreenManager:
         on_press: 
             root.manager.current = 'menu'
             root.manager.transition.direction = "right"
+            root.close()
         
 <RSAScreen>:
     name: 'RSA'
@@ -101,6 +103,8 @@ ScreenManager:
     cipher_text : cipher_text
     hasil_enkripsi : hasil_enkripsi
     hasil_dekripsi : hasil_dekripsi
+    publickey : publickey
+    privatekey : privatekey
 
     MDLabel:
         text: 'Encryption RSA'
@@ -114,6 +118,11 @@ ScreenManager:
         pos_hint:{'center_x': 0.3, 'center_y': 0.7}
         size_hint_x:None
         width:300
+    MDLabel:
+        id: publickey
+        text: 'Public Key'
+        halign: 'center'
+        pos_hint:{'center_x': 0.3, 'center_y': 0.6}
     MDRectangleFlatButton:
         text: 'Encryption'
         pos_hint: {'center_x':0.3,'center_y':0.4}
@@ -127,6 +136,11 @@ ScreenManager:
         size_hint_x:None
         width:300
 
+    MDRectangleFlatButton:
+        text: 'Generate Public and Private Key'
+        pos_hint: {'center_x':0.5,'center_y':0.5}
+        on_press: root.Generatepublickey_private()
+
     MDLabel:
         text: 'Decryption RSA'
         halign: 'center'
@@ -139,6 +153,11 @@ ScreenManager:
         pos_hint:{'center_x': 0.8, 'center_y': 0.7}
         size_hint_x:None
         width:300
+    MDLabel:
+        id: privatekey
+        text: 'Private Key'
+        halign: 'center'
+        pos_hint:{'center_x': 0.8, 'center_y': 0.6}
     MDRectangleFlatButton:
         text: 'Decryption'
         pos_hint: {'center_x':0.8,'center_y':0.4}
@@ -156,5 +175,6 @@ ScreenManager:
         on_press: 
             root.manager.current = 'menu'
             root.manager.transition.direction = "right"
+            root.close()
         
 """ 
