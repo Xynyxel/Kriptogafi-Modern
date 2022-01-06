@@ -1,28 +1,22 @@
-	# -*- mode: python ; coding: utf-8 -*-
+# -*- mode: python ; coding: utf-8 -*-
 
 import sys
 import os
 
-
 from kivy_deps import sdl2, glew
+
 from kivymd import hooks_path as kivymd_hooks_path
 
-path = os.path.abspath("D:/Kriptogafi-Modern")
-path_data = os.path.abspath("D:/Kriptogafi-Modern")
+path = os.path.abspath(".")
+
 a = Analysis(
     ["app.py"],
     pathex=[path],
-    binaries=[],
-    datas=[(path_data, "resources")],
-    hiddenimports=['pkg_resources.py2_warn'],
-    hookspath=[kivymd_hooks_path,
-    "D:/Kriptogafi-Modern"],
-    runtime_hooks=[],
-    excludes=[],
+    hookspath=[kivymd_hooks_path],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=None,
-    noarchive=False
+    noarchive=False,
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=None)
 
@@ -36,6 +30,6 @@ exe = EXE(
     debug=False,
     strip=False,
     upx=True,
-    name="Tutorial",
-    console=False,
+    name="app_name",
+    console=True,
 )
