@@ -30,6 +30,6 @@ exe = EXE(
     debug=False,
     strip=False,
     upx=True,
-    name="app_name",
+    name="Kriptografi Modern",
     console=True,
 )

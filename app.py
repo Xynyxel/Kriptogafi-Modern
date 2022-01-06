@@ -6,6 +6,8 @@ from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.Cipher import ARC4 as rc4cipher
 import base64
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton, MDLabel
 
 screen_helper = """
 ScreenManager:
@@ -14,6 +16,11 @@ ScreenManager:
     RSAScreen:
 <MenuScreen>:
     name: 'menu'
+    MDLabel:
+        text: 'Kriptografi Modern'
+        halign: 'center'
+        font_size: 50
+        pos_hint:{'center_x': 0.5, 'center_y': 0.9}
     MDRectangleFlatButton:
         text: 'Enkripsi Simetris - RC4'
         pos_hint: {'center_x':0.5,'center_y':0.6}
@@ -25,7 +32,22 @@ ScreenManager:
         pos_hint: {'center_x':0.5,'center_y':0.5}
         on_press: 
             root.manager.current = 'RSA'
-            root.manager.transition.direction = "left"    
+            root.manager.transition.direction = "left" 
+    MDLabel:
+        text: 'Credit'
+        halign: 'center'
+        font_size: 20
+        pos_hint:{'center_x': 0.5, 'center_y': 0.3}  
+    MDLabel:
+        text: 'Tony Wijaya 1855301037'
+        halign: 'center'
+        font_size: 20
+        pos_hint:{'center_x': 0.5, 'center_y': 0.2}  
+    MDLabel:
+        text: 'Nabila Firdha Aisyah 1855301015'
+        halign: 'center'
+        font_size: 20
+        pos_hint:{'center_x': 0.5, 'center_y': 0.1}     
 
 <RC4Screen>:
     name: 'RC4'
@@ -112,8 +134,6 @@ ScreenManager:
     cipher_text : cipher_text
     hasil_enkripsi : hasil_enkripsi
     hasil_dekripsi : hasil_dekripsi
-    publickey : publickey
-    privatekey : privatekey
 
     MDLabel:
         text: 'Encryption RSA'
@@ -127,11 +147,6 @@ ScreenManager:
         pos_hint:{'center_x': 0.3, 'center_y': 0.7}
         size_hint_x:None
         width:300
-    MDLabel:
-        id: publickey
-        text: 'Public Key'
-        halign: 'center'
-        pos_hint:{'center_x': 0.3, 'center_y': 0.6}
     MDRectangleFlatButton:
         text: 'Encryption'
         pos_hint: {'center_x':0.3,'center_y':0.4}
@@ -141,14 +156,15 @@ ScreenManager:
         multiline: True
         helper_text_mode: "on_focus"
         text: 'Hasil Enkripsi RSA'
-        pos_hint:{'center_x': 0.3, 'center_y': 0.3} 
+        pos_hint:{'center_x': 0.3, 'center_y': 0.2} 
+        font_size : 10
         size_hint_x:None
         width:300
 
     MDRectangleFlatButton:
-        text: 'Generate Public and Private Key'
+        text: 'Generate Public Key'
         pos_hint: {'center_x':0.5,'center_y':0.5}
-        on_press: root.Generatepublickey_private()
+        on_press: root.Generatepublickey()
 
     MDLabel:
         text: 'Decryption RSA'
@@ -162,11 +178,6 @@ ScreenManager:
         pos_hint:{'center_x': 0.8, 'center_y': 0.7}
         size_hint_x:None
         width:300
-    MDLabel:
-        id: privatekey
-        text: 'Private Key'
-        halign: 'center'
-        pos_hint:{'center_x': 0.8, 'center_y': 0.6}
     MDRectangleFlatButton:
         text: 'Decryption'
         pos_hint: {'center_x':0.8,'center_y':0.4}
@@ -232,36 +243,50 @@ class RC4Screen(Screen):
 
 class RSAScreen(Screen):
 
+    global keyPair,pubKey,pubKeyPEM,privKeyPEM
+    keyPair = RSA.generate(3072)
+    pubKey = keyPair.publickey()
+    pubKeyPEM = pubKey.exportKey()
+    privKeyPEM = keyPair.exportKey()
+
     def close(self):
         self.plain_text.text = ""
         self.cipher_text.text = ""
         self.hasil_enkripsi.text = ""
         self.hasil_dekripsi.text = ""
-        self.publickey.text = ""
-        self.privatekey.text = ""
 
-    def Generatepublickey_private(self):
-        keyPair = RSA.generate(3072)
-        pubKey = keyPair.publickey()
-        pubKeyPEM = pubKey.exportKey()
-        privKeyPEM = keyPair.exportKey()
-        self.publickey.text = pubKeyPEM.decode('ascii')
-        self.privatekey.text = privKeyPEM.decode('ascii')
+    def Generatepublickey(self):
+        pubkey = pubKeyPEM.decode('ascii') 
+        # privkey = privKeyPEM.decode('ascii')
+        # self.publickey.text = pubkey
+        # self.privatekey.text = privkey
+        self.dialog = MDDialog(
+                               title='Public key',
+                               text=pubkey,
+                               size_hint=(0.9,0.9),
+                               buttons=[MDFlatButton(text='Close', on_release=self.close_dialog)]
+                               )
+        self.dialog.open()
+        
 
-    # def encodeData(self):
-    #     pubKey = ""
-    #     plain_text = self.plain_text.text
-    #     plain_text = bytes(plain_text, 'utf-8')
-    #     encryptor = PKCS1_OAEP.new(pubKey)
-    #     encrypted = encryptor.encrypt(plain_text)
-    #     self.hasil_enkripsi.text = binascii.hexlify(encrypted).decode('UTF-8')
+    def encodeData(self):
+        plain_text = self.plain_text.text
+        plain_text = bytes(plain_text, 'utf-8')
+        encryptor = PKCS1_OAEP.new(pubKey)
+        encrypted = encryptor.encrypt(plain_text)
+        print(len(binascii.hexlify(encrypted)) )
+        self.hasil_enkripsi.text = binascii.hexlify(encrypted)
+        # binascii.hexlify(encrypted)
     
-    # def decodeData(self):
-    #     keypair = ""
-    #     cipher_text = self.cipher_text.text
-    #     decryptor = PKCS1_OAEP.new(keyPair)
-    #     decrypted = decryptor.decrypt(cipher_text)
-    #     self.hasil_dekripsi.text = decrypted.decode('UTF-8')
+    def decodeData(self):
+        cipher_text = self.cipher_text.text
+        cipher_text = binascii.unhexlify(cipher_text)
+        decryptor = PKCS1_OAEP.new(keyPair)
+        decrypted = decryptor.decrypt(cipher_text)
+        self.hasil_dekripsi.text = decrypted.decode('UTF-8')
+
+    def close_dialog(self, obj):
+        self.dialog.dismiss()
 
 
 class KriptografiModernApp(MDApp):
