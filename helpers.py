@@ -97,36 +97,35 @@ ScreenManager:
         
 <RSAScreen>:
     name: 'RSA'
-    
+    plain_text : plain_text
+    cipher_text : cipher_text
+    hasil_enkripsi : hasil_enkripsi
+    hasil_dekripsi : hasil_dekripsi
+
     MDLabel:
         text: 'Encryption RSA'
         halign: 'center'
         pos_hint:{'center_x': 0.3, 'center_y': 0.8}
     MDTextField:
+        id: plain_text
         hint_text: "Enter Plain Text"
         helper_text: "Todo Encryption"
         helper_text_mode: "on_focus"
         pos_hint:{'center_x': 0.3, 'center_y': 0.7}
         size_hint_x:None
         width:300
-    MDTextField:
-        hint_text: "Enter prime number key1"
-        helper_text: "Todo Encryption"
-        helper_text_mode: "on_focus"
-        pos_hint:{'center_x': 0.3, 'center_y': 0.6}
-        size_hint_x:None
-        width:300
-    MDTextField:
-        hint_text: "Enter prime number key2"
-        helper_text: "Todo Encryption"
-        helper_text_mode: "on_focus"
-        pos_hint:{'center_x': 0.3, 'center_y': 0.5}
-        size_hint_x:None
-        width:300
     MDRectangleFlatButton:
         text: 'Encryption'
         pos_hint: {'center_x':0.3,'center_y':0.4}
-        on_press: 
+        on_press: root.encodeData()
+    MDTextField:
+        id: hasil_enkripsi
+        multiline: True
+        helper_text_mode: "on_focus"
+        text: 'Hasil Enkripsi RSA'
+        pos_hint:{'center_x': 0.3, 'center_y': 0.3} 
+        size_hint_x:None
+        width:300
 
     MDLabel:
         text: 'Decryption RSA'
@@ -140,24 +139,15 @@ ScreenManager:
         pos_hint:{'center_x': 0.8, 'center_y': 0.7}
         size_hint_x:None
         width:300
-    MDTextField:
-        hint_text: "Enter prime number key1"
-        helper_text: "Todo Encryption"
-        helper_text_mode: "on_focus"
-        pos_hint:{'center_x': 0.8, 'center_y': 0.6}
-        size_hint_x:None
-        width:300
-    MDTextField:
-        hint_text: "Enter prime number key2"
-        helper_text: "Todo Encryption"
-        helper_text_mode: "on_focus"
-        pos_hint:{'center_x': 0.8, 'center_y': 0.5}
-        size_hint_x:None
-        width:300
     MDRectangleFlatButton:
         text: 'Decryption'
         pos_hint: {'center_x':0.8,'center_y':0.4}
-        on_press: root.encodeData()
+        on_press: root.decodeData()
+    MDLabel:
+        id: hasil_dekripsi
+        text: 'Hasil Dekripsi RSA'
+        halign: 'center'
+        pos_hint:{'center_x': 0.8, 'center_y': 0.3}
 
     
     MDRectangleFlatButton:

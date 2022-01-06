@@ -3,8 +3,8 @@ from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import helpers
 import rc4
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDRectangleFlatButton, MDFlatButton
+import rsa
+import binascii
 
 class MenuScreen(Screen):
     pass
@@ -27,7 +27,24 @@ class RC4Screen(Screen):
 
 
 class RSAScreen(Screen):
-    pass
+
+    def Generatepublickey(self):
+        publickey = rsa.publickey
+        print(publickey)
+        self.publickey.text = "test"
+
+    def Generateprivatekey(self):
+        self.privatekey.text =  rsa.privatekey
+
+    def encodeData(self):
+        plain_text = self.plain_text.text
+        output  = str(rsa.encode(plain_text))
+        self.hasil_enkripsi.text = output
+    
+    def decodeData(self):
+        cipher_text = self.cipher_text.text
+        output  = "Hasil Dekripsi : "+rsa.decode(cipher_text)
+        self.hasil_dekripsi.text = output
 
 
 class KriptografiModernApp(MDApp):
