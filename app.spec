@@ -1,15 +1,21 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import sys
+import os
+
+from kivy_deps import sdl2, glew
+from kivymd import hooks_path as kivymd_hooks_path
 
 block_cipher = None
 
-
+path = os.path.abspath(" D:\Kriptogafi-Modern")
+path_data = os.path.abspath(" D:\Kriptogafi-Modern")
 a = Analysis(['app.py'],
              pathex=[],
              binaries=[],
              datas=[],
              hiddenimports=[],
-             hookspath=[],
+             hookspath=[kivymd_hooks_path, "D:\Kriptogafi-Modern"],
              hooksconfig={},
              runtime_hooks=[],
              excludes=[],
@@ -38,6 +44,7 @@ coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
                a.datas, 
+               *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
                strip=False,
                upx=True,
                upx_exclude=[],
